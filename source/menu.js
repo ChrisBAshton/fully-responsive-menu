@@ -2,6 +2,12 @@ define(['lib/jquery'], function ($) {
 
 	var FullyResponsiveMenu = function (options) {
 		
+		/*
+
+		@TODO - need to allow config options for keeping specific menu items "desktop only" at all times (e.g. Home)
+		
+		
+		*/
 		var defaultOptions = {
 			selector:                       '.desktop_menu',
             classMobileMenu:                'mobile_menu',
