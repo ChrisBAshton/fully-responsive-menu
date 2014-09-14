@@ -1,3 +1,12 @@
+nav, .desktop_menu {
+    background: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
 a {
     color: white;
     text-decoration: none;
@@ -7,57 +16,48 @@ a:hover {
     color: rgb(99, 230, 241);
 }
 
-nav {
-    background: black;
-    padding: 20px;
+.desktop_menu {
+    float: left;
+    margin-right: 15px;
 }
-
-nav ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-}
-
-nav ul li ul {
-    display: inline;
-}
-
-nav ul li ul li {
-    display: none;
+.desktop_menu:after {
+    clear: both;
+    content: "";
+    display: table;
 }
 
 .desktop_menu li {
-    display: none;
+    display: inline-block;
 }
 
-.desktop_menu li.visible {
-    display: inline;
+.mobile_menu {
+    border-top: 1px dashed white;
 }
 
-.slicknav_menu {
-    display: none;
-}
-
-.slicknav_menu.visible {
+.mobile_menu-item {
     display: block;
 }
 
-.slicknav_icon-bar {
-    background-color: white;
+.mobile_menu__container {
+    overflow: hidden;
+    background-color: #000
+}
+.mobile_menu__button {
     display: block;
-    width: 1.125em;
-    height: 3px;
-    margin: 3px 0;
-    margin-left: auto;
+    text-align: center;
+    font-size: 24px;
+    text-decoration: none;
+    line-height: 50px;
+    color: white;
+    font-weight: bold;
 }
 
-.slicknav_nav li {
-    display: none;
-}
 
-.slicknav_nav li.visible {
-    display: block;
+
+
+
+
+
+article {
+    clear: both;
 }

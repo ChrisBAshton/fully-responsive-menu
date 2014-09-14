@@ -1,16 +1,20 @@
-define(['lib/jquery', 'lib/slicknav'], function ($) {
+define(['lib/jquery'], function ($) {
 
 	var FullyResponsiveMenu = function (options) {
 		
 		var defaultOptions = {
-			selector: ".menu"
+			selector:                       '.desktop_menu',
+            classMobileMenu:                'mobile_menu',
+            classMobileMenuItem:            'mobile_menu-item',
+            classMobileMenuContainer:       'mobile_menu__container',
+            classMobileMenuButton:          'mobile_menu__button'
 		};
 
 		this.options = $.extend(defaultOptions, options);
 
-		this.menu = $(this.options.selector);
+		this.desktopMenu = $(this.options.selector);
 
-		if (this.menu.length === 0) {
+		if (this.desktopMenu.length === 0) {
 			console.error('Invalid selector provided.');
 		} else {
 			this.init();
@@ -20,34 +24,33 @@ define(['lib/jquery', 'lib/slicknav'], function ($) {
 	FullyResponsiveMenu.prototype = {
 
 		init: function () {
-			this.callSlicknav();
-			this.copySlicknavElementsToDesktop();
+			this.prepareItems();
+			this.copyDesktopMenuIntoResponsiveMenu();
 			this.listenForResize();
 		},
 
-		callSlicknav: function () {
-			this.desktopMenu().slicknav({
-				prependTo: 'nav',
-				label: ""
-			});
-			this.provisionSlicknav();
-		},
-
-		provisionSlicknav: function () {
-			$('.slicknav_parent').each(function () {
-				var myAccount = $(this).find('.slicknav_arrow').parent().find('a');
-				$(this).prepend(myAccount.clone());
-				myAccount.remove();
+		prepareItems: function () {
+			this.desktopMenu.find('li').each(function (i) {
+				$(this).attr('data-id', 'identifier--' + i);
 			});
 		},
 
-		copySlicknavElementsToDesktop: function () {
-			var submenu = $('.slicknav_nav .slicknav_parent');
-			var unstyledSubmenu = this.desktopMenu().find('.page_item_has_children');
-			unstyledSubmenu.html(submenu.clone());
-			this.desktopMenu().find('.children').attr('style', '');
+		copyDesktopMenuIntoResponsiveMenu: function () {
+			this.desktopMenu.parent().append('<div class="' + this.options.classMobileMenuContainer + '"><a href="#" class="' + this.options.classMobileMenuButton + '">►</a><ul class="' + this.options.classMobileMenu + '" style="display: none"></ul></div>');
 
-			this.provisionDesktop();
+			$('.' + this.options.classMobileMenu).append(
+				this.desktopMenu.find('li')
+					.clone()
+					.attr('class', '')
+					.addClass(this.options.classMobileMenuItem)
+			);
+
+			var self = this;
+			$('.' + this.options.classMobileMenuButton).on('click', function (e) {
+				e.preventDefault();
+				$('.' + self.options.classMobileMenu).toggle();
+				return false;
+			});
 		},
 
 		listenForResize: function () {
@@ -58,95 +61,52 @@ define(['lib/jquery', 'lib/slicknav'], function ($) {
 			self.responsiveMenu();
 		},
 
-		provisionDesktop: function () {
-			this.desktopMenu().find('.children').addClass('slicknav_hidden');
-			this.desktopMenu().find('.visible_has_children').append('<a href="#" role="menuitem" aria-haspopup="true" tabindex="-1" class="slicknav_item"><span class="slicknav_arrow">►</span></a>');
-			this.addListenerToDesktopArrow();
-		},
-
-		addListenerToDesktopArrow: function () {
-			this.desktopMenu().find('.slicknav_item').click(function (e) {
-				var subMenu = $(this).parent().find('.children');
-				if (subMenu.hasClass('slicknav_hidden')) {
-					$(this).html('▼');
-					subMenu.slideDown();
-					subMenu.removeClass('slicknav_hidden');
-				} else {
-					$(this).html('►');
-					subMenu.slideUp();
-					subMenu.addClass('slicknav_hidden');
-				}
-				e.preventDefault();
-				return false;
-			});				
-		},
-
 		responsiveMenu: function () {
+
+			$('.' + this.options.classMobileMenuItem + ', ' + this.options.selector + ' li').hide();
 
 			var self = this,
 				viewportWidth = $(window).width(),
 				menuWidth = 0,
 				buffer = 80; // allow space for the slicknav_menu to overlap, padding, etc
 
-			this.desktopMenu().find('.page_item').each(function (i) {
-				// we don't want to run this block on nested menus
-				if (!($(this).parent().parent().hasClass('page_item'))) {
-					var uniqueClass = self.getUniqueClass($(this).attr('class')),
-						listItemWidth = $(this).width();
+			this.desktopMenu.find('li').each(function (i) {
+				
+				var listItemWidth = $(this).width(),
+					selector;
 
-					// ie6 fix
-					if (listItemWidth == 0) {
-						listItemWidth = 150;
-					}
-
-					if (uniqueClass) {
-						menuWidth += listItemWidth;
-
-						if (menuWidth + buffer > viewportWidth) {
-							self.addToMobileMenu(uniqueClass);
-						} else {
-							self.addToDesktopMenu(uniqueClass);
-						}
-					}
+				// ie6 fix
+				if (listItemWidth == 0) {
+					listItemWidth = 150;
 				}
+
+				menuWidth += listItemWidth;
+
+				if (menuWidth + buffer > viewportWidth) {
+					selector = '.' + self.options.classMobileMenuItem + '[data-id="identifier--' + i + '"]';
+				} else {
+					selector = self.options.selector + ' li[data-id="identifier--' + i + '"]';
+				}
+
+				$(selector).show();
 			});
+
 			this.displayMobileMenuIfItHasItems();
 		},
 
 		displayMobileMenuIfItHasItems: function () {
-			var mobileMenu  = this.mobileMenu();
+			var itemsOnDisplay = 0;
+			$('.' + this.options.classMobileMenuItem).each(function () {
+				if ($(this).css('display') !== 'none') {
+					itemsOnDisplay++;
+				}
+			});
 
-			if (mobileMenu.find('.visible:not(.visible--submenuitem)').length > 0) {
-				mobileMenu.parent().addClass('visible');
+			if (itemsOnDisplay > 0) {
+				$('.' + this.options.classMobileMenuContainer).show();
 			} else {
-				mobileMenu.parent().removeClass('visible');
+				$('.' + this.options.classMobileMenuContainer).hide();
 			}
-		},
-
-		getUniqueClass: function (multipleClasses) {
-			var pageID = multipleClasses.match(/[0-9]+/);
-			if (pageID !== null) {
-				return ".page-item-" + pageID;
-			}
-			return false;
-		},
-
-		addToMobileMenu: function (menuItem) {
-			this.desktopMenu().find(menuItem).removeClass('visible');
-			this.mobileMenu().find(menuItem).addClass('visible');
-		},
-
-		addToDesktopMenu: function (menuItem) {
-			this.mobileMenu().find(menuItem).removeClass('visible');
-			this.desktopMenu().find(menuItem).addClass('visible');
-		},
-
-		desktopMenu: function () {
-			return this.menu;
-		},
-
-		mobileMenu: function () {
-			return $('.slicknav_menu .slicknav_nav');
 		}
 
 	};

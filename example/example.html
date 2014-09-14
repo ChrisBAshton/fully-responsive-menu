@@ -12,11 +12,11 @@
         </header>
 
         <nav>
-            <ul class="menu">
+            <ul class="desktop_menu">
                 <li>
                     <a href="http://chrisashton.co/hover/">Home</a>
                 </li>
-                <li>
+                <li class="desktop-menu-item">
                     <a href="http://chrisashton.co/hover/the-hoverbike/how-you-can-own-it/">The Hoverbike</a>
                 </li>
                 <li>
@@ -29,10 +29,16 @@
                     <a href="http://chrisashton.co/hover/media/">Media</a>
                 </li>
                 <li>
-                    <a href="http://chrisashton.co/hover/forum/">Forum</a>
-                    <ul class="children slicknav_hidden">
-                        <li class="page_item page-item-231">
-                            <a href="http://chrisashton.co/hover/forum/subforum/">Subforum</a>
+                    <a href="http://chrisashton.co/hover/forum/">Forums</a>
+                    <ul>
+                        <li>
+                            <a href="http://chrisashton.co/hover/forum/subforum/">Subforum 1</a>
+                        </li>
+                        <li>
+                            <a href="http://chrisashton.co/hover/forum/subforum/">Subforum 2</a>
+                        </li>
+                        <li>
+                            <a href="http://chrisashton.co/hover/forum/subforum/">Subforum 3</a>
                         </li>
                     </ul>
                 </li>
@@ -83,9 +89,9 @@
 
                 require(config, ['menu'], function (fullyResponsiveMenu) {
                     var opts = {
-                        selector:     '.menu',
-                        classDesktop: 'desktop-item',
-                        classMobile:  'mobile-item'
+                        selector:            '.desktop_menu',
+                        classMobileMenu:     'mobile_menu',
+                        classMobileMenuItem: 'mobile_menu-item'
                     };
 
                     new fullyResponsiveMenu(opts);
