@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF8" />
+        <title>Fully Responsive Menu - Example</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+
+        <header>
+            <h1>Fully Responsive Menu - Example</h1>
+        </header>
+
+        <p>NOTE: want example.html to work</p>
+
+        <nav>
+            <ul class="desktop_menu">
+                <li class="page_item visible page-item-181 page_item--responsive current_page_item visible"><a href="http://chrisashton.co/hover/">Home</a>
+                </li>
+                <li class="page_item visible page-item-2"><a href="http://chrisashton.co/hover/the-hoverbike/how-you-can-own-it/">The Hoverbike</a>
+                </li>
+                <li class="page_item visible page-item-167"><a href="http://chrisashton.co/hover/product/drone-3/">Drone 3</a>
+                </li>
+                <li class="page_item visible page-item-4"><a href="http://chrisashton.co/hover/shop/">All Products</a>
+                </li>
+                <li class="page_item visible page-item-34"><a href="http://chrisashton.co/hover/media/">Media</a>
+                </li>
+                <li class="page_item visible page-item-171 page_item visible_has_children"><a href="http://chrisashton.co/hover/forum/">Forum</a>
+                    <ul class="children">
+                        <li class="page_item page-item-231"><a href="http://chrisashton.co/hover/forum/subforum/">Subforum</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="page_item visible page-item-36"><a href="http://chrisashton.co/hover/company-contact/">Company</a>
+                </li>
+                <li class="page_item visible page-item-7"><a href="http://chrisashton.co/hover/my-account/">My Account</a>
+                </li>
+                <li class="page_item visible page-item-12"><a href="http://chrisashton.co/hover/wp-login.php?action=logout">Logout</a>
+                </li>
+                <li id="cart-header-item" class="page_item page_item--responsive visible page-item-5"><a href="http://chrisashton.co/hover/cart/">Cart</a>
+                </li>
+            </ul>
+        </nav>
+
+        <article>
+            <h2>Arbitrary Content</h2>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed sem varius, ultricies leo et, semper eros. Integer bibendum ultricies euismod. Sed eget tempor felis. Vivamus quis odio risus. Cras volutpat tellus ut dolor placerat, a iaculis tellus porttitor. Phasellus aliquam velit at commodo porttitor. Vestibulum vehicula vulputate est, nec tincidunt enim sagittis nec. Praesent orci nibh, auctor ac dolor eget, dictum pellentesque elit. Duis sit amet sapien volutpat odio consectetur semper.</p>
+
+            <p>Fusce eu nunc vel metus pulvinar porta sed a lectus. Fusce vitae sem ultricies, dapibus tellus et, sodales odio. Integer cursus est orci, convallis vulputate sapien aliquet non. Aliquam suscipit odio in lectus lobortis venenatis. Nam nec eros nec nulla mattis molestie. Pellentesque nec sem risus. Vivamus varius, diam a pretium malesuada, dui est dapibus ligula, a imperdiet erat eros nec metus. Donec fringilla, arcu ac hendrerit scelerisque, odio lorem dignissim velit, non pretium nisl libero at enim. Morbi at rhoncus risus, vitae molestie dui. Ut eget augue eu tortor facilisis ullamcorper. Phasellus faucibus lectus ut enim congue, at hendrerit dolor mattis. Donec viverra ornare eleifend.</p>
+
+            <p>Vivamus nisi nisl, laoreet non commodo nec, pulvinar at erat. Praesent dignissim elementum aliquet. Nunc ullamcorper nisi eu commodo tincidunt. Nulla tincidunt dictum leo nec dignissim. Suspendisse non ultricies ante, eget imperdiet turpis. In non sodales ligula, vitae blandit elit. Praesent in justo et orci ultricies auctor sit amet vitae libero. Quisque cursus, lectus id venenatis fermentum, ipsum nulla semper lacus, et rutrum felis turpis sed metus. Etiam ante enim, varius nec dignissim vitae, sodales at metus. Aenean mollis libero et enim imperdiet, vitae mattis lectus posuere. Aliquam lacinia iaculis orci, ac blandit nulla. Pellentesque id est metus. Praesent ac augue justo.</p>
+
+            <p>Mauris tellus sapien, aliquam vel felis in, viverra tempor lacus. Phasellus vehicula nec ligula at egestas. Suspendisse sit amet massa pulvinar erat scelerisque placerat. Curabitur ullamcorper nisl enim, nec ultrices risus vulputate fringilla. Nulla non commodo magna, vel interdum velit. Aliquam mollis fringilla nibh in pellentesque. Proin rutrum nulla enim, quis rutrum nisi rhoncus sed. Mauris dolor neque, dapibus sed hendrerit in, feugiat eget turpis.</p>
+
+            <p>Ut tortor leo, condimentum et feugiat ac, convallis sit amet ipsum. Vivamus dapibus hendrerit nisi, ut tempor nisi vehicula nec. Quisque sit amet felis ut est iaculis porttitor. Curabitur vel elementum augue. Donec bibendum facilisis diam, ut egestas odio pretium in. Aliquam tincidunt ligula ac purus sodales, eu viverra lorem placerat. Aenean pharetra imperdiet vehicula. Vivamus vestibulum orci in urna euismod viverra. Nullam pharetra elementum convallis. Donec non tincidunt ipsum, in congue lacus. Duis vel enim molestie, imperdiet purus eu, gravida dolor. Cras mi sapien, porta a erat et, consectetur tempor dolor. Nullam aliquet gravida metus at blandit.</p>
+        </article>
+
+        <footer>
+            Copyright &copy; <a href="http://twitter.com/ChrisBAshton/">Chris Ashton</a> 2014
+        </footer>
+
+        <script src="../source/lib/require.js"></script>
+        <script>
+            (function () {
+                var config = {
+                    baseUrl: '../source/',
+                    shim: {
+                        'lib/jquery': {
+                            exports: '$'
+                        }
+                    }
+                };
+
+                require(config, ['menu'], function (fullyResponsiveMenu) {
+                    var opts = {
+                        menu:         '.desktop_menu',
+                        classDesktop: 'desktop-item',
+                        classMobile:  'mobile-item'
+                    };
+
+                    new fullyResponsiveMenu(opts);
+                });
+            }());
+        </script>
+    </body>
+</html>
